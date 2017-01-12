@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:prompt/prompt.dart' as prompt;
 
 main() async {
-  String purge = await prompt.ask('Should we clear out the "source" directory?');
+  String purge = await prompt.ask('Should we clear out the "source" directory? (y/N)');
   purge = purge.trim().toLowerCase();
   if (purge == 'y' || purge == 'yes') {
     print('purging project files..');

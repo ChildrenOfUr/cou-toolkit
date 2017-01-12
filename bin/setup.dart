@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:git/git.dart' as git;
 
 String clientGitURL = 'https://github.com/ChildrenOfUr/coUclient.git';
@@ -16,23 +17,51 @@ main() async {
     print('please run "cou:purge" first.');
     return;
   } else {
-    print('cloning $clientGitURL...');
-    await git.runGit(['clone', clientGitURL, 'source/client']);
-    print('cloning $serverGitURL...');
-    await git.runGit(['clone', serverGitURL, 'source/server']);
-    print('cloning $authGitURL...');
-    await git.runGit(['clone', authGitURL, 'source/auth']);
-    print('..done');
+    try {
+      await Future.wait([
+        () async {
+          print('cloning $clientGitURL...');
+          await git.runGit(['clone', clientGitURL, 'source/client']);
+          print('finished cloning $clientGitURL');
+        }(),
+        () async {
+          print('cloning $serverGitURL...');
+          await git.runGit(['clone', serverGitURL, 'source/server']);
+          await git.runGit(['checkout', 'toolkit-compat'], processWorkingDir: 'source/server');
+          print('finished cloning $serverGitURL');
+        }(),
+        () async {
+          print('cloning $authGitURL...');
+          await git.runGit(['clone', authGitURL, 'source/auth']);
+          print('finished cloning $authGitURL');
+        }()
+      ], eagerError: true);
+    } catch (e) {
+      print(e);
+      return;
+    }
   }
 
   print('injecting api keys..');
   await new File('keys/server/API_KEYS.dart').copy('source/server/lib/API_KEYS.dart');
   await new File('keys/auth/API_KEYS.dart').copy('source/auth/API_KEYS.dart');
-  print('..done');
 
   print('running pub get on subprojects..');
-  await Process.run('pub', ['get'], workingDirectory: 'source/client');
-  await Process.run('pub', ['get'], workingDirectory: 'source/server');
-  await Process.run('pub', ['get'], workingDirectory: 'source/auth');
+  try {
+    await Future.wait([
+      () async {
+        await Process.run('pub', ['get'], workingDirectory: 'source/client');
+      }(),
+      () async {
+        await Process.run('pub', ['get'], workingDirectory: 'source/server');
+      }(),
+      () async {
+        await Process.run('pub', ['get'], workingDirectory: 'source/auth');
+      }()
+    ], eagerError: true);
+  } catch (e) {
+    print(e);
+    return;
+  }
   print('..done');
 }
