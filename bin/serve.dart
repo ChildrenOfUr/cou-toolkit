@@ -9,8 +9,8 @@ main() async {
   }
 
   print('injecting api keys..');
-  await new File('keys/server/API_KEYS.json').copy('source/server/API_KEYS.json');
-  await new File('keys/auth/API_KEYS.dart').copy('source/auth/API_KEYS.dart');
+  await new File('keys/API_KEYS.json').copy('source/server/API_KEYS.json');
+  await new File('keys/API_KEYS.json').copy('source/auth/API_KEYS.json');
 
   print('starting AuthServer..');
   Process auth = await Process.start('dart',
