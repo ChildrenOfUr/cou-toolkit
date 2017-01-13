@@ -42,10 +42,6 @@ main() async {
     }
   }
 
-  print('injecting api keys..');
-  await new File('keys/server/API_KEYS.dart').copy('source/server/lib/API_KEYS.dart');
-  await new File('keys/auth/API_KEYS.dart').copy('source/auth/API_KEYS.dart');
-
   print('running pub get on subprojects..');
   try {
     await Future.wait([

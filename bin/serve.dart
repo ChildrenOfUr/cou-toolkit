@@ -8,6 +8,10 @@ main() async {
     return;
   }
 
+  print('injecting api keys..');
+  await new File('keys/server/API_KEYS.json').copy('source/server/API_KEYS.json');
+  await new File('keys/auth/API_KEYS.dart').copy('source/auth/API_KEYS.dart');
+
   print('starting AuthServer..');
   Process auth = await Process.start('dart',
     ['bin/authserver.dart', '--no-load-cert'],
@@ -21,7 +25,7 @@ main() async {
 
   print('starting GameServer..');
   Process server = await Process.start('dart',
-    ['declarations.dart', '--no-load-cert'],
+    ['declarations.dart'],
     workingDirectory: 'source/server');
   server.stderr.listen((data) {
     print('Server: ' +new String.fromCharCodes(data));
