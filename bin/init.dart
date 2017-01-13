@@ -33,6 +33,7 @@ main() async {
         () async {
           print('cloning $authGitURL...');
           await git.runGit(['clone', authGitURL, 'source/auth']);
+          await git.runGit(['checkout', 'toolkit-compat'], processWorkingDir: 'source/auth');
           print('finished cloning $authGitURL');
         }()
       ], eagerError: true);
