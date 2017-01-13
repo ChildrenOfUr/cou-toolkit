@@ -1,0 +1,18 @@
+// Should look like this.
+
+{
+  "databaseUri": "...",
+  "openWeatherMap" : "...",
+
+  "emailPort": ...,
+  "emailHostName": "...",
+  "emailUsername": "...",
+  "emailPassword": "...",
+
+  "scToken": "...",
+
+  "serverUrl": "...",
+
+  "couWebhook": "...",
+  "bugWebhook": "..."
+}

@@ -5,7 +5,8 @@ An SDK for local development on the official Children of Ur game.
 
 ## Setup
 To start using the SDK, run `pub get` to pull in dependencies.
-You also need the proper `API_KEYS.dart`/`API_KEYS.json` in the `keys/auth` and `keys/server` directories.
+You also need the proper `API_KEYS.json` in the `keys` directory.
+
 Once you've done that, you can run:
 
 `pub run cou:init`
