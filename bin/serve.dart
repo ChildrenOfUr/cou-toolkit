@@ -36,7 +36,7 @@ main() async {
 
   print('serving client..');
   Process client = await Process.start('pub',
-    ['serve'],
+    ['serve', '--mode=release'],
     workingDirectory: 'source/client');
   client.stderr.listen((data) {
     print('Client: ' +new String.fromCharCodes(data));
