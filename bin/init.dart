@@ -47,13 +47,13 @@ main() async {
   try {
     await Future.wait([
       () async {
-        await Process.run('pub', ['get'], workingDirectory: 'source/client');
+        await Process.run('pub', ['get'], workingDirectory: 'source/client', runInShell: true);
       }(),
       () async {
-        await Process.run('pub', ['get'], workingDirectory: 'source/server');
+        await Process.run('pub', ['get'], workingDirectory: 'source/server', runInShell: true);
       }(),
       () async {
-        await Process.run('pub', ['get'], workingDirectory: 'source/auth');
+        await Process.run('pub', ['get'], workingDirectory: 'source/auth', runInShell: true);
       }()
     ], eagerError: true);
   } catch (e) {
